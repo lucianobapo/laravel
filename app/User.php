@@ -31,4 +31,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    /**
+     * User can have many address.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function addresses(){
+        return $this->hasMany('App\Address');
+    }
+
+    /**
+     * User can have many articles.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles(){
+        return $this->hasMany('App\Article');
+    }
+
 }

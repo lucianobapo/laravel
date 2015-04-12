@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt_br">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,6 +34,8 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
+                    <li><a href="{{ url('/articles') }}">Articles</a></li>
+                    <li><a href="{{ url('/articles/create') }}">Create an Article</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -53,7 +55,9 @@
 		</div>
 	</nav>
 
-	@yield('content')
+    <div class="container">
+        @yield('content')
+    </div>
 
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
