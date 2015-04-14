@@ -11,6 +11,8 @@
 |
 */
 
+Route:get('foo', 'FooController@foo');
+
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
@@ -30,3 +32,5 @@ Route::get('about', 'PagesController@about');
 //Route::post('articles', 'ArticlesController@store');
 //Route::get('articles/{id}/edit', 'ArticlesController@edit');
 Route::resource('articles','ArticlesController');
+
+Route::get('tags/{tags}', 'TagsController@show');

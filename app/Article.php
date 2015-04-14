@@ -41,11 +41,22 @@ class Article extends Model {
 
     /**
      * Set the published_at attribute.
+     *
      * @param $date
      */
     public function setPublishedAtAttribute($date) {
         //$this->attributes['published_at'] = Carbon::createFromFormat('Y-m-d',$date);
         $this->attributes['published_at'] = Carbon::parse($date);
+    }
+
+    /**
+     * Get the published_at attribute.
+     *
+     * @param $date
+     * @return string
+     */
+    public function getPublishedAtAttribute($date) {
+        return Carbon::parse($date)->format('Y-m-d');
     }
 
     /**
@@ -57,4 +68,21 @@ class Article extends Model {
         return $this->belongsTo('App\User');
     }
 
+    /**
+     * Get the tags associated with the given article.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags() {
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+
+    /**
+     * Get a list of tag ids associated with the current article.
+     *
+     * @return mixed
+     */
+    public function getTagListAttribute() {
+        return $this->tags->lists('id');
+    }
 }
