@@ -8,15 +8,23 @@
                 <span class="icon-bar"></span>
             </button>
             {{--<a class="navbar-brand" href="#">Laravel</a>--}}
+            {{ App::getLocale() }}
+{{--            {{ Request::server('HTTP_ACCEPT_LANGUAGE') }}--}}
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url('/') }}">Home</a></li>
+                <li>{!! link_to_route('index', 'Welcome') !!}</li>
+                <li>{!! link_to_route('home.index', 'Home') !!}</li>
+                <li>{!! link_to_route('contact', 'Contact') !!}</li>
+                <li>{!! link_to_route('about', 'About') !!}</li>
                 {{--<li>{!! link_to('/') !!}</li>--}}
-                <li><a href="{{ url('/articles') }}">Articles</a></li>
-                <li>{!! link_to_action('ArticlesController@create', 'Create an Article') !!}</li>
+                <li>{!! link_to_route('articles.index', 'List of Articles') !!}</li>
+                <li>{!! link_to_route('articles.create', 'Create an Article') !!}</li>
+
                 {{--<li><a href="{{ url('/articles/create') }}">Create an Article</a></li>--}}
+
+                <li>{!! link_to_route('relatorios.index', 'Relatorios') !!}</li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

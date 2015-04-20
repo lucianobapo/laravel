@@ -22,10 +22,12 @@ class CreateTagsTable extends Migration {
         Schema::create('article_tag',function(Blueprint $table){
             $table->timestamps();
             $table->integer('article_id')->unsigned()->index();
-            $table->foreign('article_id')->references('id')->on('aticles')->onDelete('cascade');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
 
             $table->integer('tag_id')->unsigned()->index();
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')
+                ->on('tags')
+                ->onDelete('cascade');
         });
 	}
 
@@ -36,8 +38,9 @@ class CreateTagsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('tags');
         Schema::drop('article_tag');
+        Schema::drop('tags');
+
 	}
 
 }

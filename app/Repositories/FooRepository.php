@@ -11,6 +11,9 @@ namespace App\Repositories;
 
 class FooRepository {
     public function get() {
-        return ['array', 'of'];
+        $ret = new \App\OldOrder;
+        return $ret->listar();
+        //return ['array', 'of'];
+
     }
 }

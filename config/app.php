@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://homestead.app',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -39,7 +39,8 @@ return [
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'GMT',
+	//'timezone' => 'UTC',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -149,6 +150,7 @@ return [
 
         'Laracasts\Flash\FlashServiceProvider',
         'App\Providers\ViewComposerServiceProvider',
+        //'Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider',
 	],
 
 	/*

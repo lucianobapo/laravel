@@ -17,6 +17,7 @@ class ArticlesController extends Controller {
      */
     public function __construct() {
         $this->middleware('auth',['except'=> ['index','show']]);
+        //$this->middleware('guest',['only'=> ['index','show']]);
     }
 
     /**
@@ -76,7 +77,7 @@ class ArticlesController extends Controller {
         //flash()->success('Your article has been created!');
         flash()->overlay('Your article has been successfully created!','Good Job');
 
-        return redirect('articles');
+        return redirect(route('articles.index'));
     }
 
     /**
@@ -104,7 +105,7 @@ class ArticlesController extends Controller {
 
         flash()->overlay('Your article has been successfully updated!','Good Job');
 
-        return redirect('articles');
+        return redirect(route('articles.index'));
     }
 
     /**

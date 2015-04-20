@@ -27,6 +27,7 @@ return [
 	*/
 
 	'default' => 'sqlite',
+	//'default' => 'mysql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -63,6 +64,18 @@ return [
 			'prefix'    => '',
 			'strict'    => false,
 		],
+
+        'mysql_erpnet' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST_ERPNET', 'localhost'),
+            'database'  => env('DB_DATABASE_ERPNET', 'forge'),
+            'username'  => env('DB_USERNAME_ERPNET', 'forge'),
+            'password'  => env('DB_PASSWORD_ERPNET', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
 
 		'pgsql' => [
 			'driver'   => 'pgsql',

@@ -1,13 +1,15 @@
 <!-- Title Form Input -->
-<div class="form-group">
+<div class="form-group {{ $errors->has('title') ? 'has-error has-feedback':'' }}">
     {!! Form::label('title','Title:') !!}
     {!! Form::text('title',null,['class'=>'form-control']) !!}
+    {!! $errors->first('title', '<span class="glyphicon glyphicon-remove form-control-feedback"></span>') !!}
 </div>
 
 <!-- Body Form Input -->
-<div class="form-group">
+<div class="form-group {{ $errors->has('body') ? 'has-error has-feedback':'' }}">
     {!! Form::label('body','Body:') !!}
     {!! Form::textarea('body',null,['class'=>'form-control']) !!}
+    {!! $errors->first('body', '<span class="glyphicon glyphicon-remove form-control-feedback"></span>') !!}
 </div>
 
 <!-- Published_at Form Input -->

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model {
 
     /**
-     * Fillable fiends for an Article.
+     * Fillable fields for an Article.
      *
      * @var array
      */
