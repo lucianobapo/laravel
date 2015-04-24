@@ -4,7 +4,7 @@
     <hr>
     @include ('errors.list')
 
-    {!! Form::model($article = new \App\Article, ['url'=>'articles']) !!}
+    {!! Form::model($article = new Article, ['url'=>'articles']) !!}
         @include ('articles.form', ['submitButtonText'=>'Add Article'])
     {!! Form::close() !!}
 @stop

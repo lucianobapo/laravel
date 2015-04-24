@@ -12,11 +12,11 @@ use Illuminate\Contracts\View\View;
 
 class NavigationComposer {
 
-    public function __costruct() {
-
-    }
+//    public function __costruct() {
+//
+//    }
 
     public function compose(View $view) {
-        $view->with('latest', \App\Article::latest()->first());
+        $view->with('latest', \Article::latest()->first());
     }
 }

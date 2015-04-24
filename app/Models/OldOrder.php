@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -59,5 +59,17 @@ class OldOrder extends Model {
         return $results;
     }
 
+    public function getWbs($id) {
+        //$conditions ='';
+        $results = DB::connection('mysql_erpnet')
+            ->select('select * from erpnet_wbs where id=:id',[
+                'id'=>$id,
+            ]);
+        //foreach ($results as $resout) $resout->data_termino=Carbon::parse(date('Y-m-d',$resout->data_termino));
+        return $results;
+    }
 
+    public function isWbs($id){
+        return (count($this->getWbs($id))>0);
+    }
 }

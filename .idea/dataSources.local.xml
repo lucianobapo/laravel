@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - homestead@localhost" uuid="3658b999-c151-45d1-8bf4-b2cb7ebf2844">
+      <secret-storage>master_key</secret-storage>
+      <user-name>homestead</user-name>
+      <schema-pattern>homestead.*</schema-pattern>
+      <default-schemas>homestead.*</default-schemas>
+    </data-source>
+    <data-source name="SQLite -" uuid="e71c0075-0628-4b72-9873-0c2dfaee4dc8">
+      <secret-storage>master_key</secret-storage>
+    </data-source>
+  </component>
+</project>

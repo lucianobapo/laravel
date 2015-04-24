@@ -128,8 +128,7 @@ $.plot("#{{ $scope }}_comparado", data1,options);
 
     //var data = [ ["January", 10], ["February", 8], ["March", 4], ["April", 13], ["May", 17], ["June", 9] ];
     var data = [ {{ $lucro[$scope] }} ];
-
-    $.plot("#{{ $scope }}", [ data ], {
+    $.plot("#{{ $scope }}_lucro_mensal", [ data ], {
         series: {
             bars: {
                 show: true,
@@ -143,6 +142,43 @@ $.plot("#{{ $scope }}_comparado", data1,options);
             mode: "time",
             timeformat: "%b/%Y",
             tickSize: [1, "month"]
+        }
+    });
+
+    var data = [ {{ $lucroDiario[$scope] }} ];
+    var dataMedia = [ {{ $lucroDiario[$scope.'_media'] }} ];
+    $.plot("#{{ $scope }}_lucro_diario", [
+        {
+            data: data,
+            label: "Diário",
+            bars: {
+                show: true,
+                barWidth: 1000*60*60*24,
+                align: "center"
+            }
+        },
+        {
+            data: dataMedia,
+            label: "Média ({{ round($lucroDiario[$scope.'_mediaValor']) }})",
+            lines: { show: true }
+        } ], {
+
+        xaxis: {
+            min: {{ strtotime('-2 days',$primeira_data_diario)*1000 }},
+            max: (new Date()).getTime(),
+            mode: "time",
+            timeformat: "%b/%Y",
+            tickSize: [1, "month"]
+        },
+        legend: {
+            position: "ne",
+            margin: [0, -25],
+            noColumns: 0,
+            labelBoxBorderColor: null,
+            labelFormatter: function (label, series) {
+                // just add some space to labes
+                return label + '&nbsp;&nbsp;';
+            }
         }
     });
 

@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +19,15 @@ class Partner extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function orders(){
-        return $this->hasMany('App\Order');
+        return $this->hasMany('Order');
+    }
+
+    /**
+     * Partner can have many addresses.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function addresses(){
+        return $this->hasMany('Address');
     }
 
 }

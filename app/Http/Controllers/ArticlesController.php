@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers;
 
-use App\Article;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 //use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
-use App\Tag;
+use Tag;
 use Illuminate\Support\Facades\Auth;
+use Article;
 
 
 class ArticlesController extends Controller {

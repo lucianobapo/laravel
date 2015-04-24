@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\OldOrder;
 use Illuminate\Http\Request;
 
 class RelatoriosController extends Controller {
@@ -15,8 +16,12 @@ class RelatoriosController extends Controller {
 	public function index()
 	{
         $primeira_data = time();
+        $primeira_data_diario = time();
 
-        $scopes=['total', '411', '412'];
+        $scopes=['total'];
+        if ((new OldOrder)->isWbs(411)) array_push($scopes,'411');
+        if ((new OldOrder)->isWbs(412)) array_push($scopes,'412');
+        if ((new OldOrder)->isWbs(416)) array_push($scopes,'416');
 
         foreach ($scopes as $scope) {
             $receitas[$scope.'_acumulado'] = $this->getFloatDataAcumulado('venda', $primeira_data, $scope=='total'?'':'and id_wbs='.$scope );
@@ -24,98 +29,22 @@ class RelatoriosController extends Controller {
             $receitas[$scope.'_comparado'] = $this->getFloatDataBarras('venda', $primeira_data, $scope=='total'?'':'and id_wbs='.$scope );
             $despesas[$scope.'_comparado'] = $this->getFloatDataBarras('compra', $primeira_data, $scope=='total'?'':'and id_wbs='.$scope );
             $lucro[$scope] = $this->getFloatDataLucro($primeira_data, $scope=='total'?'':'and id_wbs='.$scope );
+            $lucroDiario[$scope] = $this->getFloatDataLucroDiario($primeira_data_diario, ($scope=='total'?'':'and id_wbs='.$scope).' and data_termino >= '.strtotime('-1 month'), $media, $mediaValor);
+            $lucroDiario[$scope.'_media'] = $media;
+            $lucroDiario[$scope.'_mediaValor'] = $mediaValor;
         }
-
-
-//        $receitas['411_acumulado'] = $this->getFloatDataAcumulado('venda', $primeira_data, 'and id_wbs=411');
-//        $despesas['411_acumulado'] = $this->getFloatDataAcumulado('compra', $primeira_data, 'and id_wbs=411');
-//        $receitas['411_comparado'] = $this->getFloatDataBarras('venda', $primeira_data, 'and id_wbs=411');
-//        $despesas['411_comparado'] = $this->getFloatDataBarras('compra', $primeira_data, 'and id_wbs=411');
-//        $lucro['411'] = $this->getFloatDataLucro($primeira_data, 'and id_wbs=411');
-//
-//        $receitas['412_acumulado'] = $this->getFloatDataAcumulado('venda', $primeira_data, 'and id_wbs=411');
-//        $despesas['412_acumulado'] = $this->getFloatDataAcumulado('compra', $primeira_data, 'and id_wbs=411');
-//        $receitas['412_comparado'] = $this->getFloatDataBarras('venda', $primeira_data, 'and id_wbs=411');
-//        $despesas['412_comparado'] = $this->getFloatDataBarras('compra', $primeira_data, 'and id_wbs=411');
-//        $lucro['412'] = $this->getFloatDataLucro($primeira_data, 'and id_wbs=411');
-
-
-
-        //dd($lucro);
 
         return view('relatorios.listar', compact(
             'receitas',
             'despesas',
             'lucro',
+            'lucroDiario',
             'scopes',
-            'primeira_data'
+            'escala',
+            'primeira_data',
+            'primeira_data_diario'
         ));
 	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
 
     /**
      * @param $tipo
@@ -124,7 +53,7 @@ class RelatoriosController extends Controller {
      */
     private function getFloatDataAcumulado($tipo, &$primeira_data, $conditions ='')
     {
-        $ordens = (new \App\OldOrder)->listarOrdens($tipo, $conditions);
+        $ordens = (new OldOrder)->listarOrdens($tipo, $conditions);
         $soma = 0;
         $datas = array();
         $saida = '';
@@ -148,7 +77,7 @@ class RelatoriosController extends Controller {
      */
     private function getFloatDataBarras($tipo, &$primeira_data, $conditions ='')
     {
-        $ordens = (new \App\OldOrder)->listarOrdensResumidas($tipo, $conditions);
+        $ordens = (new OldOrder)->listarOrdensResumidas($tipo, $conditions);
         $saida = '';
         foreach ($ordens as $ordem) {
 //            if ($ordem->data_termino < $primeira_data) $primeira_data = $ordem->data_termino;
@@ -160,16 +89,17 @@ class RelatoriosController extends Controller {
     }
 
     /**
-     * @param $tipo
      * @param $primeira_data
+     * @param string $conditions
      * @return string
+     * @internal param $tipo
      */
     private function getFloatDataLucro(&$primeira_data, $conditions ='')
     {
         //$vendas = (new \App\OldOrder)->listarOrdensResumidas('vendas');
         //$compras = (new \App\OldOrder)->listarOrdensResumidas('compras');
 
-        $ordens = (new \App\OldOrder)->listarOrdens('%', $conditions);
+        $ordens = (new OldOrder)->listarOrdens('%', $conditions);
         //$soma = 0;
         $datas = array();
         $saida = '';
@@ -188,4 +118,34 @@ class RelatoriosController extends Controller {
         return substr($saida, 0, -1);
     }
 
+    /**
+     * @param $primeira_data
+     * @param string $conditions
+     * @return string
+     * @internal param $tipo
+     */
+    private function getFloatDataLucroDiario(&$primeira_data, $conditions ='', &$saidaMedia, &$mediaValor)
+    {
+        $ordens = (new OldOrder)->listarOrdens('%', $conditions);
+        $datas = array();
+        $soma = 0;
+        foreach ($ordens as $ordem) {
+            if ($ordem->data_termino < $primeira_data) $primeira_data = $ordem->data_termino;
+            isset($datas[$ordem->data_termino])?:$datas[$ordem->data_termino]=0;
+            $datas[$ordem->data_termino] = $ordem->tipo == 'venda' ? $datas[$ordem->data_termino] + $ordem->valor : ($ordem->tipo == 'compra' ? $datas[$ordem->data_termino] - $ordem->valor : $datas[$ordem->data_termino]);
+            $soma = $soma + $datas[$ordem->data_termino];
+        }
+
+        $mediaValor = $soma / count($datas);
+        $saidaMedia = '';
+        $saida = '';
+        foreach ($datas as $key => $valor) {
+            $saida = $saida . "[" . ($key * 1000) . ", $valor],";
+            $saidaMedia = $saidaMedia . "[" . ($key * 1000) . ", $mediaValor],";
+        }
+        //dd($i);
+        $saidaMedia = substr($saidaMedia, 0, -1);
+        //dd($max);
+        return substr($saida, 0, -1);
+    }
 }

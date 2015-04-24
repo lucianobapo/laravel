@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -36,7 +36,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function addresses(){
-        return $this->hasMany('App\Address');
+        return $this->hasMany('Address');
     }
 
     /**
@@ -44,7 +44,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function articles(){
-        return $this->hasMany('App\Article');
+        return $this->hasMany('Article');
     }
 
 }

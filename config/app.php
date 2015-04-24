@@ -53,7 +53,8 @@ return [
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => 'pt',
+//	'locale' => 'en',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -150,6 +151,7 @@ return [
 
         'Laracasts\Flash\FlashServiceProvider',
         'App\Providers\ViewComposerServiceProvider',
+        'Barryvdh\Debugbar\ServiceProvider',
         //'Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider',
 	],
 
@@ -203,6 +205,29 @@ return [
         'Html'      => 'Illuminate\Html\HtmlFacade',
 
         'Flash'      => 'Laracasts\Flash\Flash',
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
+
+        /**
+         * Models mapping aliases.
+         */
+        'Article'      => '\App\Models\Article',
+        'Tag'      => '\App\Models\Tag',
+        'User'      => '\App\Models\User',
+        'Address'      => '\App\Models\Address',
+
+        'OldOrder'      => '\App\Models\OldOrder',
+
+        'CostAllocate'      => '\App\Models\CostAllocate',
+        'ItemOrder'      => '\App\Models\ItemOrder',
+        'Order'      => '\App\Models\Order',
+        'Partner'      => '\App\Models\Partner',
+        'Product'      => '\App\Models\Product',
+
+        'SharedCurrency'      => '\App\Models\SharedCurrency',
+        'SharedOrderPayment'      => '\App\Models\SharedOrderPayment',
+        'SharedOrderType'      => '\App\Models\SharedOrderType',
+        'SharedStat'      => '\App\Models\SharedStat',
+        'SharedUnitOfMeasure'      => '\App\Models\SharedUnitOfMeasure',
 
 	],
 

@@ -19,7 +19,11 @@ class CreateCostAllocatesTable extends Migration {
 
             $table->string('mandante')->index();
 
+            $table->integer('id_superior')->unsigned()->nullable();
+
+            $table->string('numero');
             $table->string('nome');
+            $table->string('descricao');
 		});
 	}
 

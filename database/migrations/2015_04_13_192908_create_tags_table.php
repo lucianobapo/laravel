@@ -40,7 +40,6 @@ class CreateTagsTable extends Migration {
 	{
         Schema::drop('article_tag');
         Schema::drop('tags');
-
 	}
 
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use App\Repositories\FooRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class FooController extends Controller {
 
@@ -15,7 +16,9 @@ class FooController extends Controller {
 //	}
 
     public function foo(FooRepository $repository) {
-	    return $repository->get();
+//        dd(trans('email.userCreatedSubject'));
+        dd(Lang::get('pagination.next'));
+//        return $repository->get();
 	}
 
 }

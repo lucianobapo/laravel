@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -65,7 +65,7 @@ class Article extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user() {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('User');
     }
 
     /**
@@ -74,7 +74,7 @@ class Article extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags() {
-        return $this->belongsToMany('App\Tag')->withTimestamps();
+        return $this->belongsToMany('Tag')->withTimestamps();
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php namespace App\Providers;
 
-use App\Article;
+//use Article;
 use Illuminate\Support\ServiceProvider;
 
 class ViewComposerServiceProvider extends ServiceProvider {

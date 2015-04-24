@@ -4,6 +4,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use App\Repositories\MessagesRepository;
 
 class AuthController extends Controller {
 
@@ -20,7 +22,7 @@ class AuthController extends Controller {
 
 	use AuthenticatesAndRegistersUsers;
 
-    protected $redirectTo = '/articles';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new authentication controller instance.
@@ -35,5 +37,38 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
+
+    /**
+     * Override parent Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param MessagesRepository $repository
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request, MessagesRepository $repository)
+    {
+        $validator = $this->registrar->validator($request->all());
+
+        if ($validator->fails())
+        {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $createUser = $this->registrar->create($request->all());
+
+        //dd($request->all());
+        // Send message if the User successful created
+        if (is_object($createUser)) {
+            $repository->setFields($request->all());
+            $repository->messageUserCreated();
+        }
+
+        $this->auth->login($createUser);
+
+        return redirect($this->redirectPath());
+    }
 
 }

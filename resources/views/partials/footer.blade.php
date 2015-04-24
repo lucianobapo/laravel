@@ -6,6 +6,6 @@
 {{--<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>--}}
 @yield('footerScriptJs')
 <script>
-    $('div.alert').not('.alert-important').delay(3000).slideUp(300);
+    $('div.alert-autohide').delay(3000).slideUp(300);
     $('#flash-overlay-modal').modal();
 </script>

@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,7 +24,7 @@ class Order extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function partner() {
-        return $this->belongsTo('App\Partner');
+        return $this->belongsTo('Partner');
     }
 
     /**
@@ -33,7 +33,7 @@ class Order extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function currency() {
-        return $this->belongsTo('App\SharedCurrency');
+        return $this->belongsTo('SharedCurrency');
     }
 
     /**
@@ -42,7 +42,7 @@ class Order extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function orderType() {
-        return $this->belongsTo('App\SharedOrderType');
+        return $this->belongsTo('SharedOrderType');
     }
 
     /**
@@ -51,7 +51,7 @@ class Order extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function orderPayment() {
-        return $this->belongsTo('App\SharedOrderPayment');
+        return $this->belongsTo('SharedOrderPayment');
     }
 
 
@@ -61,7 +61,7 @@ class Order extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function status() {
-        return $this->belongsToMany('App\SharedStat')->withTimestamps();
+        return $this->belongsToMany('SharedStat')->withTimestamps();
     }
 
 }

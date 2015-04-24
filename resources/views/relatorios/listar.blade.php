@@ -7,26 +7,32 @@
             <div class="col-md-9 col-md-offset-1">
                 @foreach($scopes as $scope)
                     <div class="panel panel-default">
-                        <div class="panel-heading">{{ $scope }} - Delivery 24hs</div>
+                        <div class="panel-heading">{{ (new OldOrder)->isWbs($scope)?(new OldOrder)->getWbs($scope)[0]->descricao:$scope }} - Delivery 24hs</div>
                         <div class="panel-body">
                             <div class="panel panel-default">
-                                <div class="panel-heading"><i class='glyphicon glyphicon-check'></i> Acumulado: Despesas e Receitas - {{ $scope }}</div>
+                                <div class="panel-heading"><i class='glyphicon glyphicon-check'></i> Acumulado: Despesas e Receitas - {{ (new OldOrder)->isWbs($scope)?(new OldOrder)->getWbs($scope)[0]->descricao:$scope }}</div>
                                 <div class="panel-body">
                                     <div id="{{ $scope }}_acumulado" style="height: 250px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
                                 </div>
                             </div>
                             <hr>
                             <div class="panel panel-default">
-                                <div class="panel-heading"><i class='glyphicon glyphicon-check'></i> Comparação mensal: Despesas e Receitas - {{ $scope }}</div>
+                                <div class="panel-heading"><i class='glyphicon glyphicon-check'></i> Comparação mensal: Despesas e Receitas - {{ (new OldOrder)->isWbs($scope)?(new OldOrder)->getWbs($scope)[0]->descricao:$scope }}</div>
                                 <div class="panel-body">
                                     <div id="{{ $scope }}_comparado" style="height: 250px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
                                 </div>
                             </div>
                             <hr>
                             <div class="panel panel-default">
-                                <div class="panel-heading"><i class='glyphicon glyphicon-check'></i> Lucro mensal - {{ $scope }}</div>
+                                <div class="panel-heading"><i class='glyphicon glyphicon-check'></i> Lucro mensal - {{ (new OldOrder)->isWbs($scope)?(new OldOrder)->getWbs($scope)[0]->descricao:$scope }}</div>
                                 <div class="panel-body">
-                                    <div id="{{ $scope }}" style="height: 250px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
+                                    <div id="{{ $scope }}_lucro_mensal" style="height: 250px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><i class='glyphicon glyphicon-check'></i> Lucro diário e média dos últimos 30 dias - {{ (new OldOrder)->isWbs($scope)?(new OldOrder)->getWbs($scope)[0]->descricao:$scope }}</div>
+                                <div class="panel-body">
+                                    <div id="{{ $scope }}_lucro_diario" style="height: 250px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
                                 </div>
                             </div>
                         </div>
