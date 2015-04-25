@@ -16,13 +16,249 @@
     <database-info product="SQLite" version="3.8.7" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native"/>
     <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed"/>
     <schema name="" catalog=""/>
+    <table name="addresses" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="mandante" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="partner_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="cep" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="logradouro" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="complemento" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="bairro" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="cidade" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="estado" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="pais" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="obs" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="principal" sqlType="TINYINT" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="cancelado" sqlType="TINYINT" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_addresses_1" columns="partner_id" ref-table="partners" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+    </table>
+    <table name="article_tag" schema="" catalog="" type="TABLE">
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="article_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="tag_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <foreign-key name="#FAKE_article_tag_1" columns="tag_id" ref-table="tags" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="0" deferrability="1"/>
+      <foreign-key name="#FAKE_article_tag_2" columns="article_id" ref-table="articles" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="0" deferrability="1"/>
+    </table>
+    <table name="articles" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="user_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="title" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="body" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="published_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="except" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_articles_1" columns="user_id" ref-table="users" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="0" deferrability="1"/>
+      <exported-key name="#FAKE_article_tag_2" table="article_tag" schema="" catalog="" columns="article_id"/>
+      <index name="articles_user_id_index" unique="true" columns="user_id"/>
+    </table>
+    <table name="cost_allocates" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="mandante" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="id_superior" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="numero" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="nome" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="descricao" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_cost_allocates_has_shared_stats_2" table="cost_allocates_has_shared_stats" schema="" catalog="" columns="cost_allocate_id"/>
+      <exported-key name="#FAKE_item_orders_3" table="item_orders" schema="" catalog="" columns="cost_id"/>
+      <index name="cost_allocates_mandante_index" unique="true" columns="mandante"/>
+    </table>
+    <table name="cost_allocates_has_shared_stats" schema="" catalog="" type="TABLE">
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="cost_allocate_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="status_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <foreign-key name="#FAKE_cost_allocates_has_shared_stats_1" columns="status_id" ref-table="shared_stats" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_cost_allocates_has_shared_stats_2" columns="cost_allocate_id" ref-table="cost_allocates" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+    </table>
+    <table name="item_orders" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="mandante" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="order_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="cost_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="product_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="quantidade" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6"/>
+      <column name="valor_unitario" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6"/>
+      <column name="desconto_unitario" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6"/>
+      <column name="currency_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="descricao" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_item_orders_1" columns="currency_id" ref-table="shared_currencies" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_item_orders_2" columns="product_id" ref-table="products" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_item_orders_3" columns="cost_id" ref-table="cost_allocates" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_item_orders_4" columns="order_id" ref-table="orders" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <exported-key name="#FAKE_item_orders_has_shared_stats_2" table="item_orders_has_shared_stats" schema="" catalog="" columns="item_id"/>
+    </table>
+    <table name="item_orders_has_shared_stats" schema="" catalog="" type="TABLE">
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="item_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="status_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <foreign-key name="#FAKE_item_orders_has_shared_stats_1" columns="status_id" ref-table="shared_stats" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_item_orders_has_shared_stats_2" columns="item_id" ref-table="item_orders" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+    </table>
     <table name="migrations" schema="" catalog="" type="TABLE">
       <column name="migration" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="batch" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
     </table>
+    <table name="orders" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="mandante" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="partner_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="currency_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="order_type_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="order_payment_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="valor_total" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6"/>
+      <column name="desconto_total" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6"/>
+      <column name="descricao" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="referencia" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="obsevacao" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_orders_1" columns="order_payment_id" ref-table="shared_order_payments" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_orders_2" columns="order_type_id" ref-table="shared_order_types" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_orders_3" columns="currency_id" ref-table="shared_currencies" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_orders_4" columns="partner_id" ref-table="partners" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <exported-key name="#FAKE_item_orders_4" table="item_orders" schema="" catalog="" columns="order_id"/>
+      <exported-key name="#FAKE_orders_has_shared_stats_2" table="orders_has_shared_stats" schema="" catalog="" columns="order_id"/>
+    </table>
+    <table name="orders_has_shared_stats" schema="" catalog="" type="TABLE">
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="order_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="status_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <foreign-key name="#FAKE_orders_has_shared_stats_1" columns="status_id" ref-table="shared_stats" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_orders_has_shared_stats_2" columns="order_id" ref-table="orders" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+    </table>
+    <table name="partners" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="mandante" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="nome" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_addresses_1" table="addresses" schema="" catalog="" columns="partner_id"/>
+      <exported-key name="#FAKE_orders_4" table="orders" schema="" catalog="" columns="partner_id"/>
+      <exported-key name="#FAKE_partners_has_shared_stats_2" table="partners_has_shared_stats" schema="" catalog="" columns="partner_id"/>
+      <index name="partners_mandante_index" unique="true" columns="mandante"/>
+    </table>
+    <table name="partners_has_shared_stats" schema="" catalog="" type="TABLE">
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="partner_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="status_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <foreign-key name="#FAKE_partners_has_shared_stats_1" columns="status_id" ref-table="shared_stats" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_partners_has_shared_stats_2" columns="partner_id" ref-table="partners" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+    </table>
+    <table name="password_resets" schema="" catalog="" type="TABLE">
+      <column name="email" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="token" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+    </table>
+    <table name="products" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="mandante" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="uom_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="nome" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_products_1" columns="uom_id" ref-table="shared_unit_of_measures" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <exported-key name="#FAKE_item_orders_2" table="item_orders" schema="" catalog="" columns="product_id"/>
+      <exported-key name="#FAKE_products_has_shared_stats_2" table="products_has_shared_stats" schema="" catalog="" columns="product_id"/>
+    </table>
+    <table name="products_has_shared_stats" schema="" catalog="" type="TABLE">
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="product_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="status_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <foreign-key name="#FAKE_products_has_shared_stats_1" columns="status_id" ref-table="shared_stats" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+      <foreign-key name="#FAKE_products_has_shared_stats_2" columns="product_id" ref-table="products" ref-schema="" ref-catalog="" ref-columns="id" update-rule="0" delete-rule="1" deferrability="1"/>
+    </table>
+    <table name="shared_currencies" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="nome_universal" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_item_orders_1" table="item_orders" schema="" catalog="" columns="currency_id"/>
+      <exported-key name="#FAKE_orders_3" table="orders" schema="" catalog="" columns="currency_id"/>
+    </table>
+    <table name="shared_order_payments" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="pagamento" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="descricao" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_orders_1" table="orders" schema="" catalog="" columns="order_payment_id"/>
+    </table>
+    <table name="shared_order_types" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="tipo" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="descricao" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_orders_2" table="orders" schema="" catalog="" columns="order_type_id"/>
+    </table>
+    <table name="shared_stats" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="mandante" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_cost_allocates_has_shared_stats_1" table="cost_allocates_has_shared_stats" schema="" catalog="" columns="status_id"/>
+      <exported-key name="#FAKE_item_orders_has_shared_stats_1" table="item_orders_has_shared_stats" schema="" catalog="" columns="status_id"/>
+      <exported-key name="#FAKE_orders_has_shared_stats_1" table="orders_has_shared_stats" schema="" catalog="" columns="status_id"/>
+      <exported-key name="#FAKE_partners_has_shared_stats_1" table="partners_has_shared_stats" schema="" catalog="" columns="status_id"/>
+      <exported-key name="#FAKE_products_has_shared_stats_1" table="products_has_shared_stats" schema="" catalog="" columns="status_id"/>
+      <index name="shared_stats_mandante_index" unique="true" columns="mandante"/>
+    </table>
+    <table name="shared_unit_of_measures" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="uom" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="descricao" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_products_1" table="products" schema="" catalog="" columns="uom_id"/>
+    </table>
     <table name="sqlite_sequence" schema="" catalog="" type="TABLE">
       <column name="name" sqlType="" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="seq" sqlType="" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="tags" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_article_tag_1" table="article_tag" schema="" catalog="" columns="tag_id"/>
+    </table>
+    <table name="users" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="mandante" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="remember_token" sqlType="VARCHAR" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="updated_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_articles_1" table="articles" schema="" catalog="" columns="user_id"/>
     </table>
   </data-source>
 </component>
