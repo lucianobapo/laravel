@@ -1,4 +1,4 @@
 #!/bin/sh
 chgrp www-data -R storage/
-chgrp g+s storage/logs/
-chgrp g+s storage/debugbar/
+chmod g+s storage/logs/
+chmod g+s storage/debugbar/
