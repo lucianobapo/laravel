@@ -26,12 +26,12 @@ class RouteServiceProvider extends ServiceProvider {
 
         $router->model('articles', 'Article');
 //        $router->bind('articles',function($id){
-//            return \App\Article::published()->findOrFail($id);
+//            return \Article::published()->findOrFail($id);
 //        });
 
-        $router->bind('tags',function($name){
-            return \Tag::where('name', $name)->firstOrFail();
-        });
+//        $router->bind('tags',function($name){
+//            return \Tag::where('name', $name)->firstOrFail();
+//        });
 
     }
 

@@ -1,6 +1,9 @@
 <?php namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Cache\Repository as CacheRepository;
+use Illuminate\Support\Facades\DB;
 
 class Tag extends Model {
 
@@ -21,5 +24,13 @@ class Tag extends Model {
 	public function articles() {
 	    return $this->belongsToMany('Article');
 	}
+
+    public function getCachedLists(CacheRepository $cache, $key, $value){
+        $cacheKey = 'getCachedLists'.md5($this->select(DB::raw('max(updated_at), count(id)'))->first()->toJson());
+        if (!$cache->has($cacheKey)) {
+            $cache->put($cacheKey, $this->lists($key, $value), Carbon::now()->addDay());
+        }
+        return $cache->get($cacheKey);
+    }
 
 }

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Repositories\LangValidatorRepository;
 
 class ArticleRequest extends Request {
 
@@ -21,11 +22,14 @@ class ArticleRequest extends Request {
 	 */
 	public function rules()
 	{
-		return [
+        return [
 			'title' => 'required|min:3',
             'body' => 'required',
             'published_at' => 'required|date',
 		];
 	}
 
+    public function validator(\Illuminate\Validation\Factory $factory){
+        return new LangValidatorRepository($factory->getTranslator(),$this->all(),$this->container->call([$this, 'rules']), array(), array(), 'article');
+    }
 }

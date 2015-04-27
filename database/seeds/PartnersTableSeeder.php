@@ -1,5 +1,7 @@
 <?php
+use App\Models\Partner;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PartnersTableSeeder extends Seeder
 {
@@ -10,10 +12,10 @@ class PartnersTableSeeder extends Seeder
 
         if (DB::connection()->getName() == 'mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\Partner::truncate();
+        Partner::truncate();
 
         foreach (range(1, 5) as $index) {
-            \App\Partner::create([
+            Partner::create([
                 'mandante' => 'teste',
                 'nome' => $faker->sentence(2),
             ]);

@@ -1,5 +1,7 @@
 <?php
+use App\Models\SharedOrderPayment;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SharedOrderPaymentsTableSeeder extends Seeder
 {
@@ -10,10 +12,10 @@ class SharedOrderPaymentsTableSeeder extends Seeder
 
         if (DB::connection()->getName() == 'mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\SharedOrderPayment::truncate();
+        SharedOrderPayment::truncate();
 
         foreach (range(1, 5) as $index) {
-            \App\SharedOrderPayment::create([
+            SharedOrderPayment::create([
                 'pagamento' => strtolower($faker->word),
                 'descricao' => $faker->sentence(2),
             ]);

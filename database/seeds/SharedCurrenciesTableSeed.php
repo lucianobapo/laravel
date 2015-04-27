@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\SharedCurrency;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SharedCurrenciesTableSeeder extends Seeder
 {
@@ -13,10 +15,10 @@ class SharedCurrenciesTableSeeder extends Seeder
 
         if (DB::connection()->getName()=='mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\SharedCurrency::truncate();
+        SharedCurrency::truncate();
 
         foreach (range(1, 10) as $index) {
-            \App\SharedCurrency::create([
+            SharedCurrency::create([
                 'nome_universal' => strtoupper($faker->word(3)),
             ]);
         }

@@ -34,8 +34,8 @@ class CreateAddressesTable extends Migration {
             $table->string('estado')->nullable();
             $table->string('pais')->nullable();
             $table->string('obs')->nullable();
-            $table->boolean('principal');
-            $table->boolean('cancelado');
+            //$table->boolean('principal');
+            //$table->boolean('cancelado');
 
 		});
 	}

@@ -1,5 +1,7 @@
 <?php
+use App\Models\SharedUnitOfMeasure;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SharedUnitOfMeasuresTableSeeder extends Seeder
 {
@@ -10,10 +12,10 @@ class SharedUnitOfMeasuresTableSeeder extends Seeder
 
         if (DB::connection()->getName() == 'mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\SharedUnitOfMeasure::truncate();
+        SharedUnitOfMeasure::truncate();
 
         foreach (range(1, 5) as $index) {
-            \App\SharedUnitOfMeasure::create([
+            SharedUnitOfMeasure::create([
                 'uom' => strtoupper($faker->word(2)),
                 'descricao' => $faker->sentence(2),
             ]);

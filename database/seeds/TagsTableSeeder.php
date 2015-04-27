@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TagsTableSeeder extends Seeder
 {
@@ -12,10 +14,10 @@ class TagsTableSeeder extends Seeder
 
         if (DB::connection()->getName()=='mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\Tag::truncate();
+        Tag::truncate();
 
         foreach (range(1, 5) as $index) {
-            \App\Tag::create([
+            Tag::create([
                 'name' => $faker->word
             ]);
         }

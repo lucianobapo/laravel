@@ -14,6 +14,8 @@ class Address extends Model {
         'partner_id',
         'cep',
         'logradouro',
+        //'principal',
+        //'cancelado',
     ];
 
     /**

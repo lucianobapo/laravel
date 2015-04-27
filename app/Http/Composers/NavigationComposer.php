@@ -17,6 +17,6 @@ class NavigationComposer {
 //    }
 
     public function compose(View $view) {
-        $view->with('latest', \Article::latest()->first());
+        //$view->with('latest', \Article::latest()->first());
     }
 }

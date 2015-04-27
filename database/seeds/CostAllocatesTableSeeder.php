@@ -1,5 +1,7 @@
 <?php
+use App\Models\CostAllocate;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CostAllocatesTableSeeder extends Seeder
 {
@@ -10,10 +12,10 @@ class CostAllocatesTableSeeder extends Seeder
 
         if (DB::connection()->getName() == 'mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\CostAllocate::truncate();
+        CostAllocate::truncate();
 
         foreach (range(1, 5) as $index) {
-            \App\CostAllocate::create([
+            CostAllocate::create([
                 'mandante' => 'teste',
                 'numero' => $faker->randomNumber(2),
                 'nome' => ucfirst($faker->word),

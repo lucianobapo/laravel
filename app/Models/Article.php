@@ -1,7 +1,9 @@
 <?php namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Article extends Model {
 
@@ -74,7 +76,8 @@ class Article extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags() {
-        return $this->belongsToMany('Tag')->withTimestamps();
+        return $this->belongsToMany('\App\Models\Tag')->withTimestamps();
+//        return $this->getCachedTags($cache);
     }
 
     /**
@@ -84,5 +87,13 @@ class Article extends Model {
      */
     public function getTagListAttribute() {
         return $this->tags->lists('id');
+    }
+
+    public function getCachedLatestPublished(CacheRepository $cache){
+        $cacheKey = 'getCachedLatestPublished'.md5($this->select(DB::raw('max(updated_at), count(id)'))->first()->toJson());
+        if (!$cache->has($cacheKey)) {
+            $cache->put($cacheKey, $this->latest('published_at')->published()->get(), Carbon::now()->addDay());
+        }
+        return $cache->get($cacheKey);
     }
 }

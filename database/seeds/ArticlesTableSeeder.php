@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Article;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ArticlesTableSeeder extends Seeder
 {
@@ -14,13 +18,13 @@ class ArticlesTableSeeder extends Seeder
 
         if (DB::connection()->getName()=='mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\Article::truncate();
+        Article::truncate();
 
         foreach (range(1, 5) as $index) {
-            $userId = \App\User::orderBy(DB::raw($randomSteatment))->first()->id;
-            $tag = \App\Tag::orderBy(DB::raw($randomSteatment))->first();
+            $userId = User::orderBy(DB::raw($randomSteatment))->first()->id;
+            $tag = Tag::orderBy(DB::raw($randomSteatment))->first();
 
-            $article = new \App\Article;
+            $article = new Article;
             $newArticle = $article->create([
                 'user_id' => $userId,
                 'title' => $faker->sentence(5),

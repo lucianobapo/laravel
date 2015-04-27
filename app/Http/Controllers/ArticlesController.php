@@ -2,34 +2,46 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Article;
+use App\Models\Tag;
+use Illuminate\Cache\Repository as CacheRepository;
 
 //use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
-use Tag;
 use Illuminate\Support\Facades\Auth;
-use Article;
+use Illuminate\Validation\Validator;
 
 
 class ArticlesController extends Controller {
 
     /**
-     * Create a new articles controller instance.
+     * @var CacheRepository
      */
-    public function __construct() {
+    private $cache;
+
+    /**
+     * Create a new articles controller instance.
+     * @param CacheRepository $cache
+     */
+    public function __construct(CacheRepository $cache) {
         $this->middleware('auth',['except'=> ['index','show']]);
         //$this->middleware('guest',['only'=> ['index','show']]);
+
+        $this->cache = $cache;
     }
 
     /**
      * Show all articles.
      *
+     * @param Article $article
      * @return \Illuminate\View\View
      */
-    public function index() {
+    public function index(Article $article) {
         //$articles= Article::latest()->get();
         //$articles= Article::latest('published_at')->get();
         //$articles= Article::latest('published_at')->where('published_at','<=',Carbon::now())->get();
-        $articles= Article::latest('published_at')->published()->get();
+        //$articles = Article::latest('published_at')->published()->get();
+        $articles = $article->getCachedLatestPublished($this->cache);
 	    return view('articles.index',compact('articles'));
 	}
 
@@ -48,10 +60,12 @@ class ArticlesController extends Controller {
     /**
      * Show the page to create a new article.
      *
+     * @param Tag $tag
      * @return \Illuminate\View\View
      */
-    public function create() {
-        $tags = Tag::lists('name','id');
+    public function create(Tag $tag) {
+//        $tags = $tag->getCachedLists($this->cache,'name','id');
+        $tags = $tag->lists('name','id');
         return view('articles.create',compact('tags'));
     }
 
@@ -75,7 +89,7 @@ class ArticlesController extends Controller {
         $this->createArticle($request);
 
         //flash()->success('Your article has been created!');
-        flash()->overlay('Your article has been successfully created!','Good Job');
+        flash()->overlay(trans('article.articleCreated'),trans('article.articleCreatedTitle'));
 
         return redirect(route('articles.index'));
     }
@@ -84,10 +98,13 @@ class ArticlesController extends Controller {
      * Show the page to edit a new article.
      *
      * @param Article $article
+     * @param Tag $tag
      * @return \Illuminate\View\View
      */
-    public function edit(Article $article) {
-        $tags = Tag::lists('name','id');
+    public function edit(Article $article, Tag $tag) {
+//        $tags = $tag->getCachedLists('name','id');
+        $tags = $tag->lists('name','id');
+//        $tags = Tag::lists('name','id');
         return view('articles.edit', compact('article', 'tags'));
     }
 
@@ -103,7 +120,7 @@ class ArticlesController extends Controller {
 
         $this->syncTags($article, $request->input('tag_list'));
 
-        flash()->overlay('Your article has been successfully updated!','Good Job');
+        flash()->overlay(trans('article.articleUpdated'),trans('article.articleUpdatedTitle'));
 
         return redirect(route('articles.index'));
     }

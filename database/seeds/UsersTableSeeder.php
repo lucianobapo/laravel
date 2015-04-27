@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,10 +14,10 @@ class UsersTableSeeder extends Seeder
 
         if (DB::connection()->getName()=='mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\User::truncate();
+        User::truncate();
 
         foreach (range(1, 10) as $index) {
-            \App\User::create([
+            User::create([
                 'mandante' => 'teste',
                 'name'=> $faker->name,
                 'email'=> $faker->email,

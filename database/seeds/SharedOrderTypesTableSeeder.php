@@ -1,5 +1,7 @@
 <?php
+use App\Models\SharedOrderType;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SharedOrderTypesTableSeeder extends Seeder
 {
@@ -10,10 +12,10 @@ class SharedOrderTypesTableSeeder extends Seeder
 
         if (DB::connection()->getName() == 'mysql')
             DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
-        \App\SharedOrderType::truncate();
+        SharedOrderType::truncate();
 
         foreach (range(1, 5) as $index) {
-            \App\SharedOrderType::create([
+            SharedOrderType::create([
                 'tipo' => strtolower($faker->word),
                 'descricao' => $faker->sentence(2),
             ]);
